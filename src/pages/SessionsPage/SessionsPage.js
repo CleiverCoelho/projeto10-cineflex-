@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function SessionsPage() {
 
@@ -43,7 +44,10 @@ export default function SessionsPage() {
                             <ButtonsContainer>
                             {dia.showtimes.map( ({name, id}) => {
                                 return (
-                                    <button key={id}>{name}</button>
+                                    <Link to={`/assentos/240/${id}`}>
+                                        <button key={id}>{name}</button>
+                                    </Link>
+                                    
                                 )
                             } )}
                             </ButtonsContainer>
