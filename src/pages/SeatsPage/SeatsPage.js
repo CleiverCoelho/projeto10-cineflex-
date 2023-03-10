@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import React from "react";
 import Assento from "../../components/Assento";
+import Comprador from "../../components/Comprador";
 
 export default function SeatsPage() {
 
@@ -13,9 +14,7 @@ export default function SeatsPage() {
     const [data, setData] = React.useState("");
     const [horario, setHorario] = React.useState("");
     const [filme, setFilme] = React.useState({});
-    const [nomeComprador, setNomeComprador] = React.useState("");
-    const [cpfComprador, setCpfComprador] = React.useState("");
-
+    const [listaCompradores, setListaCompradores] = React.useState([]);
     const [assentosReservados, setAssentosReservados] = React.useState([]);
 
 
@@ -32,11 +31,13 @@ export default function SeatsPage() {
             setFilme(response.data.movie);
         })
     }, [])
-    
+
     function finalizarReserva(event){
         event.preventDefault();
-        console.log(nomeComprador);
-        console.log(cpfComprador);
+        if(assentosReservados.length === 0){
+            alert("Selecione pelo menos um Assento");
+            return null;
+        }
     }
 
     return (
@@ -49,6 +50,8 @@ export default function SeatsPage() {
                         <Assento
                             key={id}
                             id={id}
+                            listaCompradores={listaCompradores}
+                            setListaCompradores={setListaCompradores}
                             isAvailable={isAvailable}
                             name={name}
                             assentos={assentos}
@@ -74,27 +77,21 @@ export default function SeatsPage() {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer onSubmit={finalizarReserva}>
-                Nome do Comprador:
-                <input 
-                    type="text"
-                    required
-                    placeholder="Digite seu nome..."
-                    onChange={(event) => setNomeComprador(event.target.value)}
-                    value={nomeComprador}
-                 />
-
-                CPF do Comprador:
-                <input 
-                    type="text"
-                    required
-                    placeholder="Digite seu CPF..." 
-                    onChange={(event) => setCpfComprador(event.target.value)}
-                    value={cpfComprador}
-                />
-
+            <FormCompradores onSubmit={finalizarReserva}>
+                {listaCompradores.map((comprador) => {
+                    return (
+                        <Comprador
+                            key={comprador.id}
+                            nomeComprador={comprador.nome}
+                            cpfComprador={comprador.cpf}
+                            assentoComprador={comprador.id}
+                            setListaCompradores={setListaCompradores} 
+                            listaCompradores={listaCompradores}   
+                        ></Comprador>
+                    )
+                })}    
                 <button type="submit">Reservar Assento(s)</button>
-            </FormContainer>
+            </FormCompradores>
 
             <FooterContainer>
                 <div>
@@ -109,6 +106,11 @@ export default function SeatsPage() {
         </PageContainer>
     )
 }
+const FormCompradores = styled.form`
+    button {
+        align-self: center;
+    }
+`
 
 const PageContainer = styled.div`
     display: flex;
@@ -131,20 +133,7 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.form`
-    width: calc(100vw - 40px); 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 20px 0;
-    font-size: 18px;
-    button {
-        align-self: center;
-    }
-    input {
-        width: calc(100vw - 60px);
-    }
-`
+
 const CaptionContainer = styled.div`
     display: flex;
     flex-direction: row;
