@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import React from "react";
+import Assento from "../../components/Assento";
 
 export default function SeatsPage() {
 
@@ -12,6 +13,8 @@ export default function SeatsPage() {
     const [data, setData] = React.useState("");
     const [horario, setHorario] = React.useState("");
     const [filme, setFilme] = React.useState({});
+    const [nomeComprador, setNomeComprador] = React.useState("");
+    const [cpfComprador, setCpfComprador] = React.useState("");
 
     const [assentosReservados, setAssentosReservados] = React.useState([]);
 
@@ -29,73 +32,30 @@ export default function SeatsPage() {
             setFilme(response.data.movie);
         })
     }, [])
-
-    function selecionarAssento (id, isAvailable){
-        if(!isAvailable){
-            alert("Esse assento não está disponível");
-        }else if(assentosReservados.includes(id)){
-            const tirarReserva = assentosReservados.filter( idAss => id === idAss);
-            setAssentosReservados(tirarReserva);
-        }else if(!assentosReservados.includes(id)){
-            setAssentosReservados([...assentosReservados, id]);
-        } 
-
-        const assentosFor = [...assentos];
-        assentosFor.forEach( assento => {
-            if(assento.id === id){
-                if(assento.isAvailable){
-                    assento.isAvailable = false;
-                }else if(!isAvailable && assentosReservados.includes(id)){
-                    assento.isAvailable = true;
-                }
-            }
-        })
-
-        setAssentos(assentosFor);
-    }
-
-    function verificarSelecionado(id, propriedadeCSS){
-
-        console.log(assentosReservados);
-
-        const verdeClaro = "#1AAE9E";
-        const verdeEscuro = "#0E7D71";
-
-        const amareloEscuro = "#F7C52B";
-        const amareloClaro = "#FBE192"
-
-        if(assentosReservados.includes(id)){
-            if(propriedadeCSS === "borda"){
-                return verdeEscuro;
-            }else{
-                return verdeClaro;
-            }
-        }else{
-            if(propriedadeCSS === "borda"){
-                return amareloEscuro;
-            }else{
-                return amareloClaro;
-            }
-        }
-    }
     
+    function finalizarReserva(event){
+        event.preventDefault();
+        console.log(nomeComprador);
+        console.log(cpfComprador);
+    }
+
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
                 {assentos.map(({id, name, isAvailable}) => {
-                    
                     return (
-                    <SeatItem 
-                        key={id} 
-                        color={isAvailable ? "#C3CFD9": verificarSelecionado(id, "color")} 
-                        borda={isAvailable ? "#7B8B99" : verificarSelecionado(id, "borda")}
-                        onClick={() => selecionarAssento(id, isAvailable)}
-                        
-                        >
-                            {name} 
-                        </SeatItem>
+                        <Assento
+                            key={id}
+                            id={id}
+                            isAvailable={isAvailable}
+                            name={name}
+                            assentos={assentos}
+                            setAssentos={setAssentos}
+                            setAssentosReservados={setAssentosReservados}
+                            assentosReservados={assentosReservados}
+                        ></Assento>
                 )})}
             </SeatsContainer>
 
@@ -114,14 +74,26 @@ export default function SeatsPage() {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
+            <FormContainer onSubmit={finalizarReserva}>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input 
+                    type="text"
+                    required
+                    placeholder="Digite seu nome..."
+                    onChange={(event) => setNomeComprador(event.target.value)}
+                    value={nomeComprador}
+                 />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input 
+                    type="text"
+                    required
+                    placeholder="Digite seu CPF..." 
+                    onChange={(event) => setCpfComprador(event.target.value)}
+                    value={cpfComprador}
+                />
 
-                <button>Reservar Assento(s)</button>
+                <button type="submit">Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>
@@ -159,7 +131,7 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
     flex-direction: column;
@@ -196,19 +168,6 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: 1px solid ${(props) => props.borda};         // Essa cor deve mudar
-    background-color: ${(props) => props.color};    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
 const FooterContainer = styled.div`
     width: 100%;

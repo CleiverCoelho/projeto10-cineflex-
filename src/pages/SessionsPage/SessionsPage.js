@@ -44,7 +44,7 @@ export default function SessionsPage() {
                             <ButtonsContainer>
                             {dia.showtimes.map( ({name, id}) => {
                                 return (
-                                    <Link to={`/assentos/240/${id}`}>
+                                    <Link key={id} to={`/assentos/240/${id}`}>
                                         <button key={id}>{name}</button>
                                     </Link>
                                     
