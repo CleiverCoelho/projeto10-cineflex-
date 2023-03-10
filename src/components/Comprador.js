@@ -4,12 +4,7 @@ import React from "react";
 export default function Comprador({listaCompradores, setListaCompradores, 
         nomeComprador, cpfComprador, assentoComprador}){
 
-    const [nome, setNome] = React.useState(nomeComprador)
-    const [cpf, setCpf] = React.useState(cpfComprador);
-
     function setNomeComprador(novoNome){
-        setNome(novoNome);
-
         const edicaoCompradores = [...listaCompradores]
         edicaoCompradores.forEach(comprador => {
             if(comprador.id === assentoComprador){
@@ -20,7 +15,6 @@ export default function Comprador({listaCompradores, setListaCompradores,
     }
 
     function setCpfComprador(novoCpf){  
-        setCpf(novoCpf);
         const edicaoCompradores = [...listaCompradores]
         edicaoCompradores.forEach(comprador => {
             if(comprador.id === assentoComprador){
@@ -30,7 +24,6 @@ export default function Comprador({listaCompradores, setListaCompradores,
         setListaCompradores(edicaoCompradores);
     }
 
-    // console.log(listaCompradores.listaCompradores);
     return (
             <FormContainer>
                 Nome do Comprador {assentoComprador}:
