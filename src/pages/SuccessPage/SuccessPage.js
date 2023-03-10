@@ -1,6 +1,10 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
-export default function SuccessPage() {
+
+export default function SuccessPage({filme, horario, data, listaCompradores}) {
+
+    const navigate = useNavigate();
 
     return (
         <PageContainer>
@@ -8,27 +12,37 @@ export default function SuccessPage() {
 
             <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <p>{filme.title}</p>
+                <p>{data} - {horario}</p>
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+                {listaCompradores.map(comprador => (
+                    <p key={comprador.cpf}>Assento {comprador.id}</p>
+                ))}
             </TextContainer>
 
             <TextContainer>
-                <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
+                <strong><p>Compradores</p></strong>
+                {listaCompradores.map((comprador) => {
+                    return (
+                        <Compradores key={comprador.cpf}>
+                            <p>Nome: {comprador.nome}</p>
+                            <p>CPF: {comprador.cpf}</p>
+                        </Compradores>
+                    )
+                })}
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <button onClick={() => navigate("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }
+
+const Compradores = styled.div`
+    margin-bottom: 9px;
+`
 
 const PageContainer = styled.div`
     display: flex;
@@ -67,5 +81,8 @@ const TextContainer = styled.div`
     strong {
         font-weight: bold;
         margin-bottom: 10px;
+    }
+    p{
+        margin-bottom: 5px;
     }
 `

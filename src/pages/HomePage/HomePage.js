@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 
 export default function HomePage() {
 
-    const [listaFilmes, setListaFilmes] = React.useState([undefined]); 
+    const [listaFilmes, setListaFilmes] = React.useState([]); 
 
     useEffect(() => {
         const url = "https://mock-api.driven.com.br/api/v8/cineflex/movies";
@@ -18,7 +18,6 @@ export default function HomePage() {
     if(listaFilmes.length === 0){
         return (
             <>Loading...</>
-
         )
     }
 
@@ -26,7 +25,6 @@ export default function HomePage() {
     return (
         <PageContainer>
             Selecione o filme
-
 
             <ListContainer>
                 {listaFilmes.map( (filme) => {

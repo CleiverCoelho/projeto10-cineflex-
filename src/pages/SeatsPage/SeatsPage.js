@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React from "react";
 import Assento from "../../components/Assento";
@@ -8,17 +8,12 @@ import Comprador from "../../components/Comprador";
 import Caption from "./Caption";
 import Footer from "./Footer";
 
-export default function SeatsPage() {
+export default function SeatsPage({assentos, setAssentos, dia, setDia,
+        data, setData, horario, setHorario, filme, setFilme, listaCompradores,
+        setListaCompradores, assentosReservados, setAssentosReservados}) {
 
     const {assentoId} = useParams();
-    const [assentos, setAssentos] = React.useState([]);
-    const [dia, setDia] = React.useState("");
-    const [data, setData] = React.useState("");
-    const [horario, setHorario] = React.useState("");
-    const [filme, setFilme] = React.useState({});
-    const [listaCompradores, setListaCompradores] = React.useState([]);
-    const [assentosReservados, setAssentosReservados] = React.useState([]);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${assentoId}/seats`;
@@ -40,6 +35,24 @@ export default function SeatsPage() {
             alert("Selecione pelo menos um Assento");
             return null;
         }
+
+        const idAssentos = [];
+        const infosCompradores = listaCompradores.map(comprador => {
+            idAssentos.push(Number(comprador.id));
+            return ({idAssento: Number(comprador.id), nome: comprador.nome, cpf: comprador.cpf})
+        })
+
+        const postSucesso = {ids: idAssentos, compradores: infosCompradores};
+        // console.log(postSucesso);
+        const url = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+        const promisseSucesso = axios.post(url, postSucesso);
+        promisseSucesso.then(() => {
+            navigate("/sucesso");
+        })
+
+        promisseSucesso.catch((err) => {
+            console.log(err)
+        })
     }
 
     return (
