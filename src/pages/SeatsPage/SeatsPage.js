@@ -101,8 +101,13 @@ export default function SeatsPage({assentos, setAssentos, dia, setDia,
     )
 }
 const FormCompradores = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     button {
+        margin: auto 0px;
         align-self: center;
+        margin-bottom: 22px;
     }
 `
 

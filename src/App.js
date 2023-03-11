@@ -16,12 +16,21 @@ export default function App() {
     const [listaCompradores, setListaCompradores] = React.useState([]);
     const [assentosReservados, setAssentosReservados] = React.useState([]);
 
-
     return (
         <BrowserRouter>
-           <NavContainer>CINEFLEX</NavContainer>
+           <NavContainer >
+                CINEFLEX
+            </NavContainer>
             <Routes>
-                <Route path="/" element={<HomePage />}></Route>
+                <Route path="/" element={<HomePage 
+                    setAssentos={setAssentos}
+                    setDia={setDia}
+                    setData={setData}
+                    setHorario={setHorario}
+                    setFilme={setFilme}
+                    setListaCompradores={setListaCompradores}
+                    setAssentosReservados={setAssentosReservados}
+                />}></Route>
                 <Route path="/assentos/240/:assentoId" element={<SeatsPage 
                     assentos={assentos}
                     setAssentos={setAssentos}
@@ -67,4 +76,5 @@ const NavContainer = styled.div`
         text-decoration: none;
         color: #E8833A;
     }
+
 `
