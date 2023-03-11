@@ -31,7 +31,7 @@ export default function App() {
                     setListaCompradores={setListaCompradores}
                     setAssentosReservados={setAssentosReservados}
                 />}></Route>
-                <Route path="/assentos/240/:assentoId" element={<SeatsPage 
+                <Route path="/assentos/:assentoId" element={<SeatsPage 
                     assentos={assentos}
                     setAssentos={setAssentos}
                     dia={dia}
@@ -47,7 +47,7 @@ export default function App() {
                     assentosReservados={assentosReservados}
                     setAssentosReservados={setAssentosReservados}
                 />}></Route>
-                <Route path="/sessoes/37/:filmeId" element={<SessionsPage />}></Route>
+                <Route path="/sessoes/:filmeId" element={<SessionsPage />}></Route>
                 <Route path="/sucesso" element={<SuccessPage 
                     filme={filme}
                     horario={horario}
