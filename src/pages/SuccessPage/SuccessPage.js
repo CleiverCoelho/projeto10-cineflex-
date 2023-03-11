@@ -16,18 +16,18 @@ export default function SuccessPage({filme, horario, data, listaCompradores}) {
                 <p>{data} - {horario}</p>
             </TextContainer>
 
-            <TextContainer data-test="seats-info">
+            <TextContainer >
                 <strong><p>Ingressos</p></strong>
                 {listaCompradores.map(comprador => (
-                    <p key={comprador.cpf}>Assento {comprador.id}</p>
+                    <p data-test="seats-info" key={comprador.cpf}>Assento {comprador.id}</p>
                 ))}
             </TextContainer>
 
-            <TextContainer data-test="client-info">
+            <TextContainer>
                 <strong><p>Compradores</p></strong>
                 {listaCompradores.map((comprador) => {
                     return (
-                        <Compradores key={comprador.cpf}>
+                        <Compradores data-test="client-info" key={comprador.cpf}>
                             <p>Nome: {comprador.nome}</p>
                             <p>CPF: {comprador.cpf}</p>
                         </Compradores>
