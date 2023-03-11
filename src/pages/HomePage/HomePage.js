@@ -39,7 +39,7 @@ export default function HomePage({setAssentos, setDia, setData, setHorario,
             <ListContainer>
                 {listaFilmes.map( (filme) => {
                     return (
-                        <Link to={`/sessoes/37/${filme.id}`} key={filme.id}>
+                        <Link to={`/sessoes/${filme.id}`} key={filme.id}>
                             <MovieContainer data-test="movie">
                                 <img src={filme.posterURL} alt="poster"/>
                             </MovieContainer>
