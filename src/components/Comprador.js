@@ -28,6 +28,7 @@ export default function Comprador({listaCompradores, setListaCompradores,
             <FormContainer>
                 Nome do Comprador {assentoComprador}:
                 <input 
+                    data-test="client-name"
                     type="text"
                     required
                     placeholder="Digite seu nome..."
@@ -37,6 +38,7 @@ export default function Comprador({listaCompradores, setListaCompradores,
 
                 CPF do Comprador {assentoComprador}:
                 <input 
+                    data-test="client-cpf"
                     type="text"
                     required
                     placeholder="Digite seu CPF..." 

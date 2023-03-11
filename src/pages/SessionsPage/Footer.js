@@ -1,18 +1,18 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-export default function Footer({posterURL, dia, horario, title}){
+export default function Footer({imageURL, tituloFilme}){
     return (
         <FooterContainer data-test="footer">
             <div>
-                <img src={posterURL} alt="poster" />
+                <img src={imageURL} alt="poster" />
             </div>
             <div>
-                <p>{title}</p>
-                <p>{dia} - {horario}</p>
+                <p>{tituloFilme}</p>
             </div>
         </FooterContainer>
     )
 }
+
 
 const FooterContainer = styled.div`
     width: 100%;

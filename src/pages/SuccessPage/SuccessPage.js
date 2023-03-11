@@ -10,20 +10,20 @@ export default function SuccessPage({filme, horario, data, listaCompradores}) {
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
-            <TextContainer>
+            <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{filme.title}</p>
                 <p>{data} - {horario}</p>
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
                 {listaCompradores.map(comprador => (
                     <p key={comprador.cpf}>Assento {comprador.id}</p>
                 ))}
             </TextContainer>
 
-            <TextContainer>
+            <TextContainer data-test="client-info">
                 <strong><p>Compradores</p></strong>
                 {listaCompradores.map((comprador) => {
                     return (
@@ -35,7 +35,7 @@ export default function SuccessPage({filme, horario, data, listaCompradores}) {
                 })}
             </TextContainer>
 
-            <button onClick={() => navigate("/")}>Voltar para Home</button>
+            <button data-test="go-home-btn" onClick={() => navigate("/")}>Voltar para Home</button>
         </PageContainer>
     )
 }

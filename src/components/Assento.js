@@ -63,6 +63,7 @@ export default function({id, isAvailable, name, assentos,
     
     return (
         <SeatItem 
+            data-test="seat"
             color={isAvailable ? "#C3CFD9": verificarSelecionado(name, "color")} 
             borda={isAvailable ? "#7B8B99" : verificarSelecionado(name, "borda")}
             onClick={() => selecionarAssento(name, isAvailable)}

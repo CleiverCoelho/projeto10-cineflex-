@@ -92,7 +92,7 @@ export default function SeatsPage({assentos, setAssentos, dia, setDia,
                         ></Comprador>
                     )
                 })}    
-                <button type="submit">Reservar Assento(s)</button>
+                <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
             </FormCompradores>
 
             <Footer posterURL={filme.posterURL} title={filme.title} dia={dia} horario={horario}></Footer>
